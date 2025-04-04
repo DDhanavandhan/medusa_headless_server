@@ -1,0 +1,21 @@
+{
+  "family": "medusa-task",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "3072",
+  "executionRoleArn": "arn:aws:iam::626635402783:role/ecs_execution_role_new",
+  "containerDefinitions": [
+    {
+      "name": "medusa",
+      "image": "626635402783.dkr.ecr.us-east-1.amazonaws.com/medusa-new:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 9000,
+          "hostPort": 9000
+        }
+      ]
+    }
+  ]
+}
