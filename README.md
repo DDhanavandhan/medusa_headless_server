@@ -2,6 +2,12 @@
 
 This project implements a Medusa e-commerce headless server with automated deployment to AWS ECS using GitHub Actions and Terraform.
 
+
+
+EXPLANATION VIDEO LINK: https://www.loom.com/share/569a28ecce5c41f5915e99e4b1016622?sid=59dec441-dbb4-48fd-9bdd-f0d48f88b72c
+
+
+
 ## Project Overview
 
 - **Backend**: Medusa headless e-commerce server
