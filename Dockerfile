@@ -16,7 +16,7 @@ COPY . .
 # Build the application if needed
 # RUN npm run build
 
-# Stage 2: Run the application
+# Stage 2: Run the application(production)
 FROM node:16-alpine
 
 # Set working directory
