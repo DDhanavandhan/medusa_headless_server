@@ -13,9 +13,43 @@
       "portMappings": [
         {
           "containerPort": 9000,
-          "hostPort": 9000
+          "hostPort": 9000,
+          "protocol": "tcp"
         }
-      ]
+      ],
+      "environment": [
+        {
+          "name": "DATABASE_URL",
+          "value": "postgres://your-db-connection-string"
+        },
+        {
+          "name": "REDIS_URL",
+          "value": "redis://your-redis-connection-string"
+        },
+        {
+          "name": "JWT_SECRET",
+          "value": "your-jwt-secret"
+        },
+        {
+          "name": "COOKIE_SECRET",
+          "value": "your-cookie-secret"
+        }
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9000/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/medusa",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ]
 }

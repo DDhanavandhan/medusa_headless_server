@@ -1,23 +1,23 @@
-FROM node:16-alpine
+# Use the official Node.js image as the base image
+FROM node:18-alpine
 
+# Set the working directory inside the container
 WORKDIR /app
 
-# Install Medusa CLI globally
-RUN npm install -g @medusajs/medusa-cli
+# Copy package.json and package-lock.json to the container
+COPY package.json package-lock.json ./
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm install --production  # Using --production to only install required dependencies
+# Install project dependencies
+RUN npm install
 
-# Copy the rest of the application
+# Copy all project files to the container
 COPY . .
 
-# Expose the port
+# Build the TypeScript code (ensure tsconfig.json is copied)
+RUN npm run build
+
+# Expose the port on which Medusa will run
 EXPOSE 9000
 
-# Add healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:9000/health || exit 1
-
-# Run migrations and start the application
-CMD medusa migrations run && npm run start
+# Run the Medusa backend
+CMD ["npm", "run", "start"]

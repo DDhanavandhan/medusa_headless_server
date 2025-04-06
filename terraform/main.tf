@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "us-east-1" // Changed region to us-east-1
 }
 
 # Data block to fetch default VPC
@@ -43,16 +43,16 @@ resource "aws_ecs_cluster" "main" {
   name = "medusa-cluster"
 }
 
-# ECS Service with Fargate Spot
+# ECS Service with Fargate
 resource "aws_ecs_service" "medusa" {
   name            = "medusa-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.medusa.arn
   desired_count   = 1
 
-  # Define capacity provider strategy for Fargate Spot
+  # Define capacity provider strategy for Fargate
   capacity_provider_strategy {
-    capacity_provider = "FARGATE_SPOT"
+    capacity_provider = "FARGATE" // Ensure Fargate is used
     weight            = 1
   }
 
@@ -71,7 +71,7 @@ data "aws_iam_role" "ecs_execution_role" {
 # ECS Task Definition
 resource "aws_ecs_task_definition" "medusa" {
   family                   = "medusa-task"
-  requires_compatibilities = ["FARGATE"]
+  requires_compatibilities = ["FARGATE"] // Ensure Fargate compatibility
   network_mode            = "awsvpc"
   cpu                     = 1024
   memory                  = 3072
